@@ -10,12 +10,11 @@ import threading
 
 def wait_for_grsim():
     radio : Grsim = Grsim()
-    radio.communicate_pos_robot(0,0 ,1,0)
     robot : Robot = world.get_robot(1,0)
     while True:
         #radio.communicate_pos_robot(0,0 ,1,0)
         robot = world.get_robot(1,0)
-        radio.communicate_grsim(0,0,5)
+        #radio.communicate_grsim(0,0,5)
         print("Robot pos: ", robot.x, robot.y)
         if robot.x != 0:
             print("Robot pos: ", robot.x, robot.y)
@@ -29,9 +28,9 @@ if __name__ == '__main__':
     vision_t = threading.Thread(target= vision.loop)
     vision_t.start()
 
-    time.sleep(2)
+    time.sleep(1)
     wait_for_grsim()
-    #time.sleep(2)
+
     motion : Motion = Motion(0, 1, world)
     running = True
     print("Running...")
@@ -41,5 +40,5 @@ if __name__ == '__main__':
         current_time = time.time()
         delta_time = current_time - last_time
         last_time = current_time
-        motion.move_linear((-1.500, 0.01), delta_time)
+        motion.move_linear((2,2))
         

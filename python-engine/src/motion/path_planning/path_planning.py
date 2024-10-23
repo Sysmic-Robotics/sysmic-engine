@@ -27,3 +27,16 @@ class PathPlanning:
             point = goal*t + start*(1-t)
             path.append(point)
         return path
+    
+    def circular_path(radius, num_points):
+        # Create an array of angles equally spaced around the circle
+        angles = np.linspace(0, 2 * np.pi, num_points, endpoint=False)
+        
+        # Generate the x and y coordinates using the parametric equation of a circle
+        x_points = radius * np.cos(angles)
+        y_points = radius * np.sin(angles)
+        
+        # Combine x and y points into a list of tuples representing (x, y) coordinates
+        circle_points = list(zip(x_points, y_points))
+        
+        return circle_points
