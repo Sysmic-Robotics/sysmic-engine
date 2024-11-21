@@ -1,0 +1,36 @@
+from communications.grsim import Grsim
+from communications.vision import Vision
+from classes.detection import Ball, Robot
+vision : Vision = Vision()
+import threading
+import time
+vision.initSocket("224.5.23.2", 10020) #Socket for grSim (10020) or SSL_Vision (10006)
+vision_t = threading.Thread(target=vision.vision_loop)
+vision_t.start()
+time.sleep(1)
+
+radio=Grsim()
+def is_within_range(point1, point2) -> bool:
+    robot : Robot = vision.get_robot_by_id(0,"blue")
+    if 1 > distancia( point1, point2 ):
+        return True
+    return False
+
+def distancia(punto1, punto2):
+    x1, y1 = punto1
+    x2, y2 = punto2
+    distancia = ((x2 - x1)**2 + (y2 - y1)**2)**0.5
+    return distancia
+
+
+def seguir_camino(pto_inicial,pto_final):
+    dif_tuplas=(pto_final[0] - pto_inicial[0],pto_final[1] - pto_inicial[1])
+    vecdir=normalize_2d_vector(self, x,y)(dif_tuplas)
+    while True:
+        velocidad=vecdir
+        radio.communicate_grsim(0,0, veltangent=10*velocidad[0], velnormal=10*velocidad[1])
+        if is_within_range((Robot.posx,Robot.posy), pto_final):
+            break
+            
+seguir_camino((Robot.posx,Robot.posy),(2.3, -1.3))
+
